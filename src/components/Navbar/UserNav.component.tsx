@@ -6,6 +6,7 @@ import { UserModel } from '../../domain/user/model/user.model'
 interface Props {
     currentUser: User | undefined
 }
+
 const UserNav = ({ currentUser }: Props) => {
     const navigate = useNavigate()
     return (

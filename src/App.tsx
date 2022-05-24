@@ -22,13 +22,16 @@ import { UserModel } from './domain/user/model/user.model';
 interface Props {
   currentUser?: User
 }
+
 function App({ currentUser }: Props) {
 
+  //TODO: NEED TO DISCUSS
   useEffect(() => {
     Firebase.getInstance();
     authenticateMe()
   }, [])
 
+  //TODO: NEED TO DISCUSS
   const authenticateMe = async () => {
     if (!currentUser) {
       const uid = localStorage.getItem('uid');
