@@ -9,6 +9,11 @@ export class FirebaseAuth {
     private email: string | undefined;
     private password: string | undefined;
 
+
+    /**
+     * makes an instance of FirebaseAUth class
+     * @returns instance of the FirebaseAuth class 
+     */
     public static make(): FirebaseAuth {
         return new FirebaseAuth()
     }
@@ -16,6 +21,7 @@ export class FirebaseAuth {
     /**
      * Store authentication action types
      */
+    //TODO: NEED TO DISCUSS 
     private authAction = {
         [AuthAction.Login]: signInWithEmailAndPassword,
         [AuthAction.Register]: createUserWithEmailAndPassword

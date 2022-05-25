@@ -6,7 +6,7 @@ import { Serializer } from "../serializer";
 export class UserSerializer extends Serializer<UserForm, User>{
 
     /**
-     * Makes an instance of user deserializer
+     * Makes an instance of user Serializer
      * @param formValues 
      * @returns 
      * 
@@ -34,6 +34,7 @@ export class UserSerializer extends Serializer<UserForm, User>{
             email,
             aboutMe,
             username,
+            //TODO: need to discuss
             experience: parseInt(experience as string),
             programmingLanguages,
             role: UserRole.User,

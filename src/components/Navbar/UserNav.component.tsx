@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { User } from '../../domain/user/model/user'
 import { UserModel } from '../../domain/user/model/user.model'
@@ -27,6 +26,7 @@ const UserNav = ({ currentUser }: Props) => {
                         <li><a><i className="fa fa-user-o" /> {currentUser.username}</a>
                             <ul className="sub-menu">
                                 <li><a href="blog-grid.html">Profile</a></li>
+                                {/* //TODO: need to discuss about navigation */}
                                 <li><a onClick={async () => {
                                     await UserModel.logoutMe();
                                     navigate('/login')
