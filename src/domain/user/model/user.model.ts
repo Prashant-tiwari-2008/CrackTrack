@@ -1,4 +1,3 @@
-import * as Router from "react-router";
 import { Firebase } from "../../../library/firebase/firebase";
 import { UserSerializer } from "../../../library/serializer/user/user.serializer";
 import { store } from "../../../redux/store/store";
@@ -24,8 +23,6 @@ export class UserModel {
             //Set current user
             await this.setCurrentUser(user);
             //Navigate to dashboard
-
-
         }
     }
 

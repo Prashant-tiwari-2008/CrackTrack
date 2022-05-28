@@ -61,6 +61,7 @@ export class FirebaseAuth {
         this.password = password;
         return await this.authenticateMe(AuthAction.Login)
     }
+    
 
     /**
      * Get user register
