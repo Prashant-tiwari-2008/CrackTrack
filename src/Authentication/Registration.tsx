@@ -5,7 +5,8 @@ import * as Yup from 'yup';
 import { Validation } from '../library/validation/Validation';
 import FormField from '../components/Form/Field';
 import { UserModel } from '../domain/user/model/user.model';
-
+import Button from '../components/Button/Button.component';
+import { Notification, Progress, toaster } from "rsuite";
 const Registration = () => {
 
   const initialValues: UserForm = {
@@ -25,70 +26,71 @@ const Registration = () => {
 
   return (
     <>
-      {/* Login & Register Start */}
-      <div className="section section-padding">
-        <div className="container">
-          {/* Login & Register Wrapper Start */}
-          <div className="login-register-wrapper">
-            <div className="row gx-5">
-              <div className="col-lg-12">
-                {/* Login & Register Box Start */}
-                <div className="login-register-box">
-                  {/* Section Title Start */}
-                  <div className="section-title">
-                    <h2 className="title">Register</h2>
-                  </div>
-                  {/* Section Title End */}
-                  <div className="login-register-form">
-                    <Formik
-                      initialValues={initialValues}
-                      validationSchema={validationSchema}
-                      onSubmit={(
-                        values: UserForm,
-                        { setSubmitting }: FormikHelpers<UserForm>
-                      ) => {
-                        UserModel.makeUser(values)
-                      }}
-                    >
-                      {(formik) => (
-                        <Form>
-                          <div className="single-form">
-                            <FormField type='text' name="username" formik={formik} />
-                          </div>
-                          <div className="single-form">
-                            <Field type="number" name="experience" className="form-control" placeholder="Enter your experience years " />
-                          </div>
-                          <div className="single-form">
-                            <Field type="text" name="programmingLanguages" className="form-control" placeholder="programmingLanguages you know " />
-                          </div>
-                          <div className="single-form">
-                            <FormField type='text' name="email" formik={formik} />
-                          </div>
-                          <div className="single-form">
-                            <FormField type='text' name="password" formik={formik} />
-                          </div>
-                          <div className="single-form">
-                            <Field type="text" name="aboutMe" className="form-control" placeholder="Enter about you " />
-                          </div>
+        {/* Login & Register Start */}
+        <div className="section section-padding">
+          <div className="container">
+            {/* Login & Register Wrapper Start */}
+            <div className="login-register-wrapper">
+              <div className="row gx-5">
+                <div className="col-lg-12">
+                  {/* Login & Register Box Start */}
+                  <div className="login-register-box">
+                    {/* Section Title Start */}
+                    <div className="section-title">
+                      <h2 className="title">Register</h2>
+                    </div>
+                    {/* Section Title End */}
+                    <div className="login-register-form">
+                      <Formik
+                        initialValues={initialValues}
+                        validationSchema={validationSchema}
+                        onSubmit={(
+                          values: UserForm,
+                          { setSubmitting, submitForm }: FormikHelpers<UserForm>
+                        ) => {
+                          console.log('frsds sub')
+                          UserModel.makeUser(values)
+                        }}
+                      >
+                        {(formik) => (
+                          <Form>
+                            <div className="single-form">
+                              <FormField type='text' name="username" formik={formik} />
+                            </div>
+                            <div className="single-form">
+                              <Field type="number" name="experience" className="form-control" placeholder="Enter your experience years " />
+                            </div>
+                            <div className="single-form">
+                              <Field type="text" name="programmingLanguages" className="form-control" placeholder="programmingLanguages you know " />
+                            </div>
+                            <div className="single-form">
+                              <FormField type='text' name="email" formik={formik} />
+                            </div>
+                            <div className="single-form">
+                              <FormField type='text' name="password" formik={formik} />
+                            </div>
+                            <div className="single-form">
+                              <Field type="text" name="aboutMe" className="form-control" placeholder="Enter about you " />
+                            </div>
 
-                          <div className="single-form">
-                            <button className="btn btn-primary btn-hover-heading-color w-100" type="submit">Register</button>
-                          </div>
-                        </Form>
-                      )}
-                    </Formik>
+                            <div className="single-form">
+                              <Button type='button' onSubmit={() => formik.submitForm()}>Register</Button>
+                            </div>
+                          </Form>
+                        )}
+                      </Formik>
 
+                    </div>
                   </div>
+                  {/* Login & Register Box End */}
                 </div>
-                {/* Login & Register Box End */}
               </div>
             </div>
+            {/* Login & Register Wrapper End */}
           </div>
-          {/* Login & Register Wrapper End */}
         </div>
-      </div>
-      {/* Login & Register End */}</>
-  )
+        {/* Login & Register End */}</>
+      )
 }
 
-export default Registration
+      export default Registration

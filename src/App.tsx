@@ -21,7 +21,8 @@ import InterviewQuestion from './domain/questions/view/interviewQuestion.view';
 import LogicalQuestion from './domain/questions/view/logicalQuestion.view';
 import HrQuestion from './domain/hr-Section/view/hrSection.view'
 import Contact from './domain/contact/view/contact.view'
-
+import UserProfile from './domain/user/view/profile';
+import 'rsuite/dist/rsuite.min.css';
 // https://jsv9000.app/
 interface Props {
   currentUser?: User
@@ -48,7 +49,6 @@ function App({ currentUser }: Props) {
 
   const isUserAuthenticated = () => {
     const uid = localStorage.getItem('uid');
-    console.log("uid", uid)
     if (!uid) {
       return true
     }
@@ -62,16 +62,21 @@ function App({ currentUser }: Props) {
         <Navbar />
         {currentLocation !== '' && <BreadCrumb text={currentLocation} />}
         <Routes>
-          <Route path="/" element={
-            <ProtectedRoutes condition={isUserAuthenticated()} navigationUrl={"/login"}>
-              <Home />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={
+            <ProtectedRoutes condition={!isUserAuthenticated()} navigationUrl={"/"}>
+              <Login />
             </ProtectedRoutes>} />
-          <Route path="/login" element={<Login />} />
           <Route path="/interview-questions" element={<InterviewQuestion />} />
           <Route path="/logical-questions" element={<LogicalQuestion />} />
           <Route path="/hr-question" element={<HrQuestion />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/registration" element={<Registration />} />
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/registration" element={
+            <ProtectedRoutes condition={!isUserAuthenticated()} navigationUrl={"/"}>
+              <Registration />
+            </ProtectedRoutes>}
+          />
 
         </Routes>
         <RouteChangeDetector routeChange={(activeRoute: string) => setCurrentLocation(activeRoute)} />

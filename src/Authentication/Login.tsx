@@ -5,6 +5,7 @@ import { Validation } from '../library/validation/Validation';
 import FormField from '../components/Form/Field';
 import { UserModel } from '../domain/user/model/user.model';
 import { useNavigate } from "react-router-dom"
+import Button from '../components/Button/Button.component';
 
 const Login = () => {
 
@@ -55,7 +56,7 @@ const Login = () => {
                             <FormField type='password' name="password" formik={formik} />
                           </div>
                           <div className="single-form">
-                            <button className="btn btn-primary btn-hover-heading-color w-100" type='submit'>Login</button>
+                            <Button type='submit'>Login</Button>
                           </div>
                           <div className="single-form">
                             <p><a href="login-register.html#">Lost your password?</a></p>

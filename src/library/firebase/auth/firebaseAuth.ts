@@ -34,7 +34,7 @@ export class FirebaseAuth {
      * 
      */
     async authenticateMe(action: AuthAction): Promise<AuthResponse> {
-        const response: AuthResponse = { status: ResponseType.failure, uid: undefined }
+        const response: AuthResponse = { status: ResponseType.failure, uid: undefined, message: undefined }
         const authentication = getAuth();
         if (!this.email || !this.password) return response;
         try {
@@ -43,7 +43,8 @@ export class FirebaseAuth {
             response.status = ResponseType.success;
             response.uid = uid;
             response.token = refreshToken
-        } catch (e) {
+        } catch (e: any) {
+            response.message = e.code
             response.status = ResponseType.failure
         }
         return response
@@ -61,7 +62,7 @@ export class FirebaseAuth {
         this.password = password;
         return await this.authenticateMe(AuthAction.Login)
     }
-    
+
 
     /**
      * Get user register

@@ -6,12 +6,14 @@ import { UserState } from '../../domain/user/redux/reducer/user.reducer';
 import PhoneNavbar from './PhoneNavbar.component';
 import UserNav from './UserNav.component';
 import { IRoutes, RoutingMenu } from './Routing/RoutingMenu';
+import { UserModel } from '../../domain/user/model/user.model';
+import { userInfo } from 'os';
 
 interface Props {
-  currentUser?: User
+  currentUserModel?: UserModel
 }
 
-const Navbar = ({ currentUser }: Props) => {
+const Navbar = ({ currentUserModel }: Props) => {
   const navRoutes: IRoutes[] = RoutingMenu.navRoutesList();
   const navaigate = useNavigate()
   return (
@@ -51,7 +53,7 @@ const Navbar = ({ currentUser }: Props) => {
               </div>
               {/* Header Menu End */}
               {/* Header Meta Start */}
-              <UserNav currentUser={currentUser} />
+              <UserNav currentUserModel={currentUserModel} />
               {/* Header Meta End */}
             </div>
             {/* Header Wrapper End */}
@@ -66,7 +68,7 @@ const Navbar = ({ currentUser }: Props) => {
 
 const mapStateToProps = (state: { user: UserState }) => {
   return {
-    currentUser: state.user.currentUser
+    currentUserModel: state.user.currentUser ? UserModel.make(state.user.currentUser) : undefined
   }
 }
 

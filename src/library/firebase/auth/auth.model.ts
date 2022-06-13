@@ -7,6 +7,7 @@ export interface AuthResponse {
     status: ResponseType;
     token?: string
     uid: string | undefined
+    message: string | undefined
 }
 
 export enum AuthAction {
