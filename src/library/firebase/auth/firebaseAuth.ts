@@ -9,6 +9,11 @@ export class FirebaseAuth {
     private email: string | undefined;
     private password: string | undefined;
 
+
+    /**
+     * makes an instance of FirebaseAUth class
+     * @returns instance of the FirebaseAuth class 
+     */
     public static make(): FirebaseAuth {
         return new FirebaseAuth()
     }
@@ -16,6 +21,7 @@ export class FirebaseAuth {
     /**
      * Store authentication action types
      */
+    //TODO: NEED TO DISCUSS 
     private authAction = {
         [AuthAction.Login]: signInWithEmailAndPassword,
         [AuthAction.Register]: createUserWithEmailAndPassword
@@ -28,7 +34,7 @@ export class FirebaseAuth {
      * 
      */
     async authenticateMe(action: AuthAction): Promise<AuthResponse> {
-        const response: AuthResponse = { status: ResponseType.failure, uid: undefined }
+        const response: AuthResponse = { status: ResponseType.failure, uid: undefined, message: undefined }
         const authentication = getAuth();
         if (!this.email || !this.password) return response;
         try {
@@ -37,7 +43,8 @@ export class FirebaseAuth {
             response.status = ResponseType.success;
             response.uid = uid;
             response.token = refreshToken
-        } catch (e) {
+        } catch (e: any) {
+            response.message = e.code
             response.status = ResponseType.failure
         }
         return response
@@ -55,6 +62,7 @@ export class FirebaseAuth {
         this.password = password;
         return await this.authenticateMe(AuthAction.Login)
     }
+
 
     /**
      * Get user register

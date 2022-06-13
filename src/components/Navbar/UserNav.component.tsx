@@ -1,12 +1,12 @@
-import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { User } from '../../domain/user/model/user'
 import { UserModel } from '../../domain/user/model/user.model'
 
 interface Props {
-    currentUser: User | undefined
+    currentUserModel: UserModel | undefined
 }
-const UserNav = ({ currentUser }: Props) => {
+
+const UserNav = ({ currentUserModel }: Props) => {
     const navigate = useNavigate()
     return (
         <div className="header-meta">
@@ -16,16 +16,17 @@ const UserNav = ({ currentUser }: Props) => {
                     <button><i className="flaticon-loupe" /></button>
                 </form>
             </div>
-            {!currentUser && <div className="header-login d-none d-lg-flex">
+            {!currentUserModel && <div className="header-login d-none d-lg-flex">
                 <Link className="link" to="/login"><i className="fa fa-user-o" /> Login</Link>
                 <Link className="link" to="/registration">Register</Link>
             </div>}
-            {currentUser && (
+            {currentUserModel && (
                 <div className="header-menu">
                     <ul className="main-menu">
-                        <li><a><i className="fa fa-user-o" /> {currentUser.username}</a>
+                        <li><a><i className="fa fa-user-o" /> {currentUserModel.pluck('username')}</a>
                             <ul className="sub-menu">
-                                <li><a href="blog-grid.html">Profile</a></li>
+                                <li><Link to="/user-profile">Profile</Link></li>
+                                {/* //TODO: need to discuss about navigation */}
                                 <li><a onClick={async () => {
                                     await UserModel.logoutMe();
                                     navigate('/login')

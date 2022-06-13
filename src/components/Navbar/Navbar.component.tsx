@@ -2,16 +2,19 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { User } from '../../domain/user/model/user';
-import { UserModel } from '../../domain/user/model/user.model';
 import { UserState } from '../../domain/user/redux/reducer/user.reducer';
 import PhoneNavbar from './PhoneNavbar.component';
 import UserNav from './UserNav.component';
+import { IRoutes, RoutingMenu } from './Routing/RoutingMenu';
+import { UserModel } from '../../domain/user/model/user.model';
+import { userInfo } from 'os';
 
 interface Props {
-  currentUser?: User
+  currentUserModel?: UserModel
 }
 
-const Navbar = ({ currentUser }: Props) => {
+const Navbar = ({ currentUserModel }: Props) => {
+  const navRoutes: IRoutes[] = RoutingMenu.navRoutesList();
   const navaigate = useNavigate()
   return (
     <>
@@ -29,35 +32,28 @@ const Navbar = ({ currentUser }: Props) => {
               {/* Header Menu Start */}
               <div className="header-menu d-none d-lg-block">
                 <ul className="main-menu">
-                  <li>
-                    <Link className="active" to="/">Home</Link>
-                  </li>
-                  <li>
-                    <a href="index-2.html#">Tech-Question</a>
-                    <ul className="sub-menu">
-                      <li><a href="about.html">Interview Question</a></li>
-                      <li><a href="about-2.html">Logical Question</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="index-2.html#">HR-Section</a>
-                    <ul className="sub-menu">
-                      <li><a href="course-list.html">Comming Soon</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="index-2.html#">Contact</a>
-                    <ul className="sub-menu">
-                      <li><a href="blog-grid.html">Blog Grid</a></li>
-                      <li><a href="blog-list.html">Blog List</a></li>
-                      <li><a href="blog-details.html">Blog Details</a></li>
-                    </ul>
-                  </li>
-
+                  {navRoutes && navRoutes.map((route, index) => {
+                    return (
+                      <>
+                        <li key={index}>
+                          <Link className="active" to={route.link}>{route.title}</Link>
+                          {route.IsSubMenu && <ul className="sub-menu">
+                            {route.subMenu?.map((subRoute) => {
+                              return (
+                                <li><Link className="active" to={subRoute.link!}>{subRoute.title}</Link></li>
+                              )
+                            })}
+                          </ul>
+                          }
+                        </li>
+                      </>
+                    )
+                  })}
                 </ul>
               </div>
               {/* Header Menu End */}
               {/* Header Meta Start */}
-              <UserNav currentUser={currentUser} />
+              <UserNav currentUserModel={currentUserModel} />
               {/* Header Meta End */}
             </div>
             {/* Header Wrapper End */}
@@ -72,7 +68,7 @@ const Navbar = ({ currentUser }: Props) => {
 
 const mapStateToProps = (state: { user: UserState }) => {
   return {
-    currentUser: state.user.currentUser
+    currentUserModel: state.user.currentUser ? UserModel.make(state.user.currentUser) : undefined
   }
 }
 

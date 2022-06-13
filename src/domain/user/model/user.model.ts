@@ -1,12 +1,19 @@
-import * as Router from "react-router";
 import { Firebase } from "../../../library/firebase/firebase";
+import { Model } from "../../../library/model/model";
+import { Toastr } from "../../../library/Notifier/toastr";
 import { UserSerializer } from "../../../library/serializer/user/user.serializer";
 import { store } from "../../../redux/store/store";
 import { removeCurrentUser, setUser } from "../redux/action/user.action";
 import { User, UserForm } from "./user";
  
-export class UserModel {
+export class UserModel extends Model<User> {
     private static readonly path = 'user'
+
+
+    static make(user: User) {
+        const userModel = new UserModel(user);
+        return userModel;
+    }
 
     /**
      * Handle user
@@ -16,16 +23,16 @@ export class UserModel {
     static async makeUser(values: UserForm): Promise<void> {
         const { email, password } = values
         const registerUser = await Firebase.auth.register(email, password);
-        if (registerUser) {
+        if(registerUser.status === 'failure') {
+            Toastr.fire(registerUser.message || 'Something went wrong!').error()
+        }
+        if (registerUser && registerUser.uid) {
             // Serialize user object
             const user = UserSerializer.for(values, registerUser.uid).serialize();
             //Send it to firebase realtime database
-            Firebase.database<User>(this.path).create(user);
+             Firebase.database<User>(this.path).create(user);
             //Set current user
             await this.setCurrentUser(user);
-            //Navigate to dashboard
-
-
         }
     }
 

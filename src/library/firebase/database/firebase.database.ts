@@ -14,6 +14,7 @@ export class FirebaseDatabase<T extends HasUid> {
     /**
      * Holds the instance of firebase realtime database
      */
+    //TODO: need to discuss.
     database: RealtimeDatabase;
 
     constructor(
@@ -25,7 +26,7 @@ export class FirebaseDatabase<T extends HasUid> {
 
     /**
      * Insert a record in firebase realtime database
-     * @param enity 
+     * @param entity 
      * 
      */
     create(entity: T) {
@@ -36,8 +37,7 @@ export class FirebaseDatabase<T extends HasUid> {
         const refs = ref(this.database);
         const path = `${this.path}/${id}`;
         const userSnapshot = await get(child(refs, path));
-        if(userSnapshot.exists()) {
-            console.log(userSnapshot.val())
+        if (userSnapshot.exists()) {
             return userSnapshot.val()
         }
         return undefined

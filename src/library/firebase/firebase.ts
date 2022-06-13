@@ -11,7 +11,6 @@ export class Firebase {
      */
     private static instance: Firebase;
 
-
     /**
      * Hold the instance of `FirebaseApp`
      */
@@ -23,6 +22,7 @@ export class Firebase {
      * Get Instance for firebase class as SINGLETON
      * @returns 
      */
+    //TODO:
     public static getInstance(): Firebase {
         if (!Firebase.instance) {
             this.instance = new Firebase();
