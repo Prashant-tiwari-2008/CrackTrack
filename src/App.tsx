@@ -63,21 +63,15 @@ function App({ currentUser }: Props) {
         {currentLocation !== '' && <BreadCrumb text={currentLocation} />}
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={
-            <ProtectedRoutes condition={!isUserAuthenticated()} navigationUrl={"/"}>
-              <Login />
-            </ProtectedRoutes>} />
           <Route path="/interview-questions" element={<InterviewQuestion />} />
           <Route path="/logical-questions" element={<LogicalQuestion />} />
           <Route path="/hr-question" element={<HrQuestion />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/user-profile" element={<UserProfile />} />
-          <Route path="/registration" element={
-            <ProtectedRoutes condition={!isUserAuthenticated()} navigationUrl={"/"}>
-              <Registration />
-            </ProtectedRoutes>}
-          />
-
+          <Route element={<ProtectedRoutes isAuthenticated={!isUserAuthenticated()} navigationUrl={"/"} />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/registration" element={<Registration />} />
+            <Route path="/user-profile" element={<UserProfile />} />
+          </Route>
         </Routes>
         <RouteChangeDetector routeChange={(activeRoute: string) => setCurrentLocation(activeRoute)} />
       </BrowserRouter>
